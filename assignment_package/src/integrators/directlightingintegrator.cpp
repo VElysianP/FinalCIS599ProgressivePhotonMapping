@@ -18,7 +18,7 @@ Color3f DirectLightingIntegrator::Li(const Ray &ray, const Scene &scene, std::sh
         Vector3f wiW; 
         leColor = isec.Le(woW);
 
-        if((isec.objectHit->areaLight!=nullptr))
+        if(!isec.ProduceBSDF())
         {
             return leColor;
         }
@@ -34,7 +34,7 @@ Color3f DirectLightingIntegrator::Li(const Ray &ray, const Scene &scene, std::sh
         Intersection shadowIntersection = Intersection();
         if(scene.Intersect(shadowTestRay,&shadowIntersection))
         {
-            if((shadowIntersection.objectHit->GetAreaLight()==nullptr)||(shadowIntersection.objectHit->areaLight!=scene.lights[lightNum]))
+            if((!shadowIntersection.ProduceBSDF())||(shadowIntersection.objectHit->GetLight()->name!=scene.lights[lightNum]->name))
             {
 
                 totalColor = leColor;

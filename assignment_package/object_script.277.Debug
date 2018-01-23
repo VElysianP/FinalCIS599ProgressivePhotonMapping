@@ -44,6 +44,10 @@ INPUT(
 ./debug\plasticmaterial.o
 ./debug\bounds.o
 ./debug\bvh.o
+./debug\directionallight.o
+./debug\pointlight.o
+./debug\spotlight.o
+./debug\progressivephotonmapping.o
 ./debug\qrc_glsl.o
 ./debug\qrc_sfx.o
 ./debug\moc_mainwindow.o

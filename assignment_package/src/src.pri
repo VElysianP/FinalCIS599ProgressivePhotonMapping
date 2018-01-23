@@ -47,7 +47,11 @@ SOURCES += \
     $$PWD/scene/materials/microfacetbrdf.cpp \
     $$PWD/scene/materials/plasticmaterial.cpp \
     $$PWD/scene/bounds.cpp \
-    $$PWD/scene/bvh.cpp
+    $$PWD/scene/bvh.cpp \
+    $$PWD/scene/lights/directionallight.cpp \
+    $$PWD/scene/lights/pointlight.cpp \
+    $$PWD/scene/lights/spotlight.cpp \
+    $$PWD/integrators/progressivephotonmapping.cpp
 
 HEADERS += \
     $$PWD/mainwindow.h \
@@ -96,4 +100,14 @@ HEADERS += \
     $$PWD/scene/materials/microfacetbrdf.h \
     $$PWD/scene/materials/plasticmaterial.h \
     $$PWD/scene/bounds.h \
-    $$PWD/scene/bvh.h
+    $$PWD/scene/bvh.h \
+    $$PWD/scene/progressivekdtree.h \
+    $$PWD/scene/progressivephoton.h \
+    $$PWD/scene/progressivekdtree.h \
+    $$PWD/scene/progressivephoton.h \
+    $$PWD/scene/progressivekdtree.h \
+    $$PWD/scene/progressivephoton.h \
+    $$PWD/scene/lights/directionallight.h \
+    $$PWD/scene/lights/pointlight.h \
+    $$PWD/scene/lights/spotlight.h \
+    $$PWD/integrators/progressivephotonmapping.h

@@ -6,6 +6,9 @@
 #include <globals.h>
 #include <samplers/sampler.h>
 #include <scene/lights/light.h>
+#include <warpfunctions.h>
+#include <scene/progressivekdtree.h>
+#include <scene/progressivephoton.h>
 
 
 // An interface for rendering scenes by evaluating the Light Transport Equation
@@ -36,6 +39,10 @@ public:
 
     // Clamp the upper end of our bounds to not go past the edge of the film.
     void ClampBounds();
+
+    void ProgressiveRayTracing(Ray cameraRay, const Scene& scene, const Point2i pixel, std::shared_ptr<Sampler> sampler, const int depth, QList<PixelHitPoint> &progHitPoint);
+    void ProgressiveKdTree(ProgressiveKdNode *root, PixelHitPoint hitPoint, int linearIndex);
+    virtual void TraceProgressivePhotons(const Scene& scene, ProgressiveKdNode* root,std::shared_ptr<Sampler> sampler, int depth, int numPhotons, QList<PixelHitPoint>& hitPoints);
 
 protected:
     Scene const * const scene;
