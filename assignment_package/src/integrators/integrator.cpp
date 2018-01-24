@@ -5,38 +5,70 @@ void Integrator::run()
     Render();
 }
 
-void Integrator::Render()
-{
-    // Compute the bounds of our sample, clamping to screen's max bounds if necessary
-    // Instantiate a FilmTile to store this thread's pixel colors
-    std::vector<Point2i> tilePixels = bounds.GetPoints();
-    // For every pixel in the FilmTile:
-    for(Point2i pixel : tilePixels)
-    {
-        //Uncomment this to debug a particular pixel within this tile
+
+//for path tracing
+//void Integrator::Render()
+//{
+//    // Compute the bounds of our sample, clamping to screen's max bounds if necessary
+//    // Instantiate a FilmTile to store this thread's pixel colors
+//    std::vector<Point2i> tilePixels = bounds.GetPoints();
+//    // For every pixel in the FilmTile:
+//    for(Point2i pixel : tilePixels)
+//    {
+//        //Uncomment this to debug a particular pixel within this tile
 //        if(pixel.x != 198 || pixel.y != 387)
 //        {
 //            continue;
 //        }
-        Color3f pixelColor(0.f);
-        // Ask our sampler for a collection of stratified samples, then raycast through each sample
-        std::vector<Point2f> pixelSamples = sampler->GenerateStratifiedSamples();
-        for(Point2f sample : pixelSamples)
-        {
-            sample = sample + Point2f(pixel); // _sample_ is [0, 1), but it needs to be translated to the pixel's origin.
-            // Generate a ray from this pixel sample
-            Ray ray = camera->Raycast(sample);
-            // Get the L (energy) for the ray by calling Li(ray, scene, tileSampler, arena)
-            // Li is implemented by Integrator subclasses, like DirectLightingIntegrator
-            Color3f L = Li(ray, *scene, sampler, recursionLimit,Color3f(1.0f));
-            // Accumulate color in the pixel
-            pixelColor += L;
-        }
-        // Average all samples' energies
-        pixelColor /= pixelSamples.size();
-        film->SetPixelColor(pixel, glm::clamp(pixelColor, 0.f, 1.f));
+//        Color3f pixelColor(0.f);
+//        // Ask our sampler for a collection of stratified samples, then raycast through each sample
+//        std::vector<Point2f> pixelSamples = sampler->GenerateStratifiedSamples();
+//        for(Point2f sample : pixelSamples)
+//        {
+//            sample = sample + Point2f(pixel); // _sample_ is [0, 1), but it needs to be translated to the pixel's origin.
+//            // Generate a ray from this pixel sample
+//            Ray ray = camera->Raycast(sample);
+//            // Get the L (energy) for the ray by calling Li(ray, scene, tileSampler, arena)
+//            // Li is implemented by Integrator subclasses, like DirectLightingIntegrator
+//            Color3f L = Li(ray, *scene, sampler, recursionLimit,Color3f(1.0f));
+//            // Accumulate color in the pixel
+//            pixelColor += L;
+//        }
+//        // Average all samples' energies
+//        pixelColor /= pixelSamples.size();
+//        film->SetPixelColor(pixel, glm::clamp(pixelColor, 0.f, 1.f));
+//    }
+//    //We're done here! All pixels have been given an averaged color.
+//}
+
+
+//for progressive photon mapping
+void Integrator::Render()
+{
+    QList<PixelHitPoint> progHitPoint;//the size is equal to the total size of the pixels
+    ProgressiveKdNode* rootProg = nullptr;
+
+    std::vector<Point2i> tilePixels = bounds.GetPoints();
+
+    for(Point2i pix :tilePixels)
+    {
+        Ray ray = camera->Raycast(pix);
+        ProgressiveRayTracing(ray, *scene, pix, sampler,recursionLimit, progHitPoint);
     }
-    //We're done here! All pixels have been given an averaged color.
+
+    for(int trace = 0;trace<traceTimes;trace++)
+    {
+        int photonsToTrace = ceil(totalNumPhoton / traceTimes);
+        TraceProgressivePhotons(*scene, rootProg, sampler, recursionLimit, photonsToTrace, progHitPoint);
+
+        for(int index = 0;index <tilePixels.size();index++)
+        {
+            Color3f pixelColor = progHitPoint[index].color + progHitPoint[index].indirectColor;
+            Point2i pixelNum = progHitPoint[index].pixel;
+
+            film->SetPixelColor(pixelNum, glm::clamp(pixelColor, 0.f, 1.f));
+        }
+    }
 }
 
 
@@ -50,10 +82,10 @@ void Integrator::ClampBounds()
 
 void Integrator::ProgressiveRayTracing(Ray cameraRay, const Scene& scene, const Point2i pixel, std::shared_ptr<Sampler> sampler, const int depth, QList<PixelHitPoint> &progHitPoint)
 {
-    if((pixel.x==262)&&(pixel.y==121))
-    {
-        Point3f tempPoint;
-    }
+//    if((pixel.x==262)&&(pixel.y==121))
+//    {
+//        Point3f tempPoint;
+//    }
     Intersection isec = Intersection();
     //cameraRay = scene.camera.Raycast((float)pixel.x,(float)pixel.y);
     Ray currentRay = cameraRay;
@@ -131,7 +163,7 @@ void Integrator::ProgressiveRayTracing(Ray cameraRay, const Scene& scene, const 
                             //which means that the shadow ray cannot hit a light source
                             //or the specific light source we want
                             //if should be inside the shadow
-                            if((shadowIsec.objectHit->GetLight()==nullptr)||(shadowIsec.objectHit->GetLight()->name != scene.lights[lightNum]->name))
+                            if((shadowIsec.objectHit->GetLight()==nullptr)||(shadowIsec.objectHit->light != scene.lights[lightNum]))
                             {
                                 sumColor += leColor;
                             }

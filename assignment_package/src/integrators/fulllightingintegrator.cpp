@@ -75,7 +75,7 @@ Color3f FullLightingIntegrator::Li(const Ray &ray, const Scene &scene, std::shar
                     if(scene.Intersect(shadowTestRay,&shadowIntersection))
                     {
                         //the situation without shadow
-                        if(shadowIntersection.objectHit->GetLight()->name==scene.lights[chosenLightNum]->name)
+                        if(shadowIntersection.objectHit->light == scene.lights[chosenLightNum])
                         {
                             if(directLightPdf1==0)
                             {
@@ -114,7 +114,7 @@ Color3f FullLightingIntegrator::Li(const Ray &ray, const Scene &scene, std::shar
                     if(scene.Intersect(newRay,&newIntersection))
                     {
                         //hits the light we want
-                        if(newIntersection.objectHit->GetLight()->name==scene.lights[chosenLightNum]->name)
+                        if(newIntersection.objectHit->light == scene.lights[chosenLightNum])
                         {
                             Vector3f wiwInverse = directBSDFWiW;
                             directBSDFLiColor = newIntersection.Le(-wiwInverse);

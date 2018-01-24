@@ -34,7 +34,7 @@ Color3f DirectLightingIntegrator::Li(const Ray &ray, const Scene &scene, std::sh
         Intersection shadowIntersection = Intersection();
         if(scene.Intersect(shadowTestRay,&shadowIntersection))
         {
-            if((!shadowIntersection.ProduceBSDF())||(shadowIntersection.objectHit->GetLight()->name!=scene.lights[lightNum]->name))
+            if((!shadowIntersection.ProduceBSDF())||(shadowIntersection.objectHit->light!=scene.lights[lightNum]))
             {
 
                 totalColor = leColor;
