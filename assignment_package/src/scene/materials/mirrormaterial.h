@@ -14,6 +14,10 @@ public:
 
     void ProduceBSDF(Intersection *isect) const;
 
+    bool JudgeTransmissiveMaterial() const
+    {
+        return false;
+    }
 
 private:
     Color3f Kr;                    // The spectral reflection of this material.

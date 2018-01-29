@@ -110,7 +110,7 @@ Color3f BSDF::Sample_f(const Vector3f &woW, Vector3f *wiW, const Point2f &xi,
     }
 
 
-    if(!(bxdf->type&BSDF_SPECULAR)&&matchingComps>1)
+    if(!(bxdf->type&BSDF_SPECULAR)&&(matchingComps>1))
     {
         bool reflect = glm::dot(*wiW,normal)*glm::dot(woW,normal)>0;
         f = Color3f(0.0);

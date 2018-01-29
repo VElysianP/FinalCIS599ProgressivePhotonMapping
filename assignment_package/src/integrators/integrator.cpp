@@ -50,9 +50,14 @@ void Integrator::Render()
 
     std::vector<Point2i> tilePixels = bounds.GetPoints();
 
+
     for(Point2i pix :tilePixels)
     {
-        Ray ray = camera->Raycast(pix);
+        //used for anti-aliasing
+        std::vector<Point2f> pixelSamples = sampler->GenerateStratifiedSamples();
+        Point2f sample = pixelSamples[floor(sampler->Get1D() * pixelSamples.size())];
+        sample = sample * Point2f(0.2f) + Point2f(pix);
+        Ray ray = camera->Raycast(sample);
         ProgressiveRayTracing(ray, *scene, pix, sampler,recursionLimit, progHitPoint);
     }
 
@@ -82,10 +87,10 @@ void Integrator::ClampBounds()
 
 void Integrator::ProgressiveRayTracing(Ray cameraRay, const Scene& scene, const Point2i pixel, std::shared_ptr<Sampler> sampler, const int depth, QList<PixelHitPoint> &progHitPoint)
 {
-//    if((pixel.x==262)&&(pixel.y==121))
-//    {
-//        Point3f tempPoint;
-//    }
+    if((pixel.x==117)&&(pixel.y==192))
+    {
+        Point3f tempPoint;
+    }
     Intersection isec = Intersection();
     //cameraRay = scene.camera.Raycast((float)pixel.x,(float)pixel.y);
     Ray currentRay = cameraRay;
@@ -104,7 +109,7 @@ void Integrator::ProgressiveRayTracing(Ray cameraRay, const Scene& scene, const 
                 PixelHitPoint tempHitPoint;
                 tempHitPoint.isec = isec;
                 tempHitPoint.ray = currentRay;
-                tempHitPoint.color = isec.Le(-currentRay.direction);
+                tempHitPoint.color = finalColor * isec.Le(-currentRay.direction);
                 tempHitPoint.pixel = pixel;
                 tempHitPoint.position = isec.point;
                 progHitPoint.push_back(tempHitPoint);
@@ -118,15 +123,11 @@ void Integrator::ProgressiveRayTracing(Ray cameraRay, const Scene& scene, const 
                 Color3f leColor = isec.Le(woW);
                 BxDFType typeBxdf;
                 float specularPdf;
-                Color3f fColor = isec.bsdf->Sample_f(woW,&wiW,sampler->Get2D(),&specularPdf,BSDF_ALL,&typeBxdf);
+                Color3f fColor = isec.bsdf->Sample_f(woW,&wiW,sampler->Get2D(),&specularPdf, BSDF_ALL ,&typeBxdf);
 
                 //specular bounce
-                if((typeBxdf & BSDF_SPECULAR)!=0)
+                if((typeBxdf & BSDF_SPECULAR) != 0)
                 {
-                    dep++;
-                    finalColor = finalColor * fColor;
-                    currentRay = Ray(isec.point,wiW);
-
                     //if the ray cannot go out of the specular object during the traces
                     //just give the color its own Le color
                     if(dep == depth)
@@ -134,11 +135,38 @@ void Integrator::ProgressiveRayTracing(Ray cameraRay, const Scene& scene, const 
                         PixelHitPoint tempHitPoint;
                         tempHitPoint.pixel = pixel;
                         //tempHitPoint.ray = currentRay;
-                        tempHitPoint.color = isec.Le(woW);
-                        //tempHitPoint.isec = isec;
-                        tempHitPoint.position = isec.point;
+                        tempHitPoint.color = finalColor * isec.Le(woW);
+                        tempHitPoint.isec = Intersection();
+                        tempHitPoint.position = Point3f((float)-INFINITY);
                         progHitPoint.push_back(tempHitPoint);
                         return;
+                    }
+                    //force transmissive material to go throgh the material rather than
+                    //be reflected
+                    if(isec.objectHit->GetMaterial()->JudgeTransmissiveMaterial())
+                    {
+                        Vector3f wo = isec.bsdf->worldToTangent * woW;
+                        bool entering = CosTheta(wo) > 0;
+                        float eta = entering? 1.0 / isec.bsdf->eta : isec.bsdf->eta;
+                        Vector3f wi;
+                        if(Refract(wo,Faceforward(Normal3f(0.0,0.0,1.0),wo),eta,&wi))
+                        {
+                            dep++;
+                            finalColor = finalColor * fColor;
+                            currentRay = isec.SpawnRay(isec.bsdf->tangentToWorld * wi);
+                        }
+                        else
+                        {
+                            dep++;
+                            finalColor = finalColor * fColor;
+                            currentRay = isec.SpawnRay(wiW);
+                        }
+                    }
+                    else
+                    {
+                        dep++;
+                        finalColor = finalColor * fColor;
+                        currentRay = isec.SpawnRay(wiW);
                     }
 
                     continue;
@@ -190,11 +218,17 @@ void Integrator::ProgressiveRayTracing(Ray cameraRay, const Scene& scene, const 
                     PixelHitPoint tempHitPoint;
                     tempHitPoint.pixel = pixel;
                     tempHitPoint.ray = currentRay;
-                    tempHitPoint.color = finalColor * sumColor;
+//                    if(dep == 0)
+//                    {
+                        tempHitPoint.color = finalColor * sumColor;
+//                    }
+//                    else
+//                    {
+                        //tempHitPoint.color = finalColor * leColor;
+                    //}
                     tempHitPoint.isec = isec;
                     tempHitPoint.position = isec.point;
                     progHitPoint.push_back(tempHitPoint);
-                    //go out of the loop
                     return;
                 }
             }
@@ -203,12 +237,16 @@ void Integrator::ProgressiveRayTracing(Ray cameraRay, const Scene& scene, const 
         else
         {
             PixelHitPoint tempHitPoint;
-            //tempHitPoint.isec = isec;
+            tempHitPoint.isec = Intersection();
             //tempHitPoint.ray = currentRay;
             tempHitPoint.color = Color3f(0.0f);
             tempHitPoint.pixel = pixel;
             tempHitPoint.position = Point3f((float)-INFINITY);
             progHitPoint.push_back(tempHitPoint);
+
+//            if(progHitPoint[progHitPoint.size()-1].isec.t == -1.0){
+//                std::cout << "stop" << std::endl;
+//            }
             return;
         }
     }

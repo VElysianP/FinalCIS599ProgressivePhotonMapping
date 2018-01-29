@@ -58,14 +58,16 @@ void ProgressivePhotonMapping::TraceProgressivePhotons(const Scene& scene, Progr
 
                     //the first trace of progressive photon mapping is replaced by
                     //direct lighting integrator
-                    if((traceNum == 1)||(currentPdf == 0.f))
+                    if((traceNum == 1)||((typeBxdf & BSDF_SPECULAR)!=0))
                     {
                        continue;
                     }
-                    else
+
+                    if((typeBxdf & BSDF_SPECULAR) == 0)
                     {
                         UpdateHitPoints(hitPoints,isec.point,currentColor);
                     }
+
                 }
 
                 //Russian Roulette
@@ -102,6 +104,10 @@ void ProgressivePhotonMapping::UpdateHitPoints(QList<PixelHitPoint>& hitPoints,P
     //but it is accurate
     for(int i = 0;i<loopSize;i++)
     {
+        if(hitPoints[i].isec.t == -1.0f)
+        {
+            continue;
+        }
         Point3f  hitPointPos = hitPoints[i].position;
         //for every hitPoint, if the photon has the possibility that its color will
         //influnce the final color
@@ -121,6 +127,13 @@ void ProgressivePhotonMapping::PhotonFinalGathering(QList<PixelHitPoint>& hitPoi
     //correct the color for this hit point
     for(int hitCount = 0;hitCount < hitPoints.size();hitCount++)
     {      
+
+        //avoid all non-intersection points
+        if(hitPoints[hitCount].isec.t == -1.0f)
+        {
+            continue;
+        }
+
         //which means this hitPoint hits the light source
         //go to the next hitpoint
         if(hitPoints[hitCount].isec.ProduceBSDF())

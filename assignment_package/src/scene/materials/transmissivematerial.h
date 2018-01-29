@@ -13,6 +13,11 @@ public:
 
     void ProduceBSDF(Intersection *isect) const;
 
+    bool JudgeTransmissiveMaterial() const
+    {
+        return true;
+    }
+
 
 private:
     Color3f Kt;                    // The spectral transmission of this material.

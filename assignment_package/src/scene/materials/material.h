@@ -15,6 +15,7 @@
 class Material {
   public:
     virtual void ProduceBSDF(Intersection *isect) const = 0;
+    virtual bool JudgeTransmissiveMaterial() const = 0;
     virtual ~Material(){}
 
     static Color3f GetImageColor(const Point2f &uv_coord, const QImage* const image)
