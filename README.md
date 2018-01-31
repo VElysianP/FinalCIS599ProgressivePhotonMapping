@@ -5,17 +5,18 @@
 
 <h1 id="finalcis599progressivephotonmapping">FinalCIS599ProgressivePhotonMapping</h1>
 <h2 id="rendering-results">1. Rendering Results</h2>
-<h4 id="general-view">1). General View</h4>
-<h5 id="cornell-box">Cornell Box</h5>
+<h3 id="general-view">1). General View</h3>
+<h4 id="cornell-box">Cornell Box</h4>
 <p>Initial step: direct lighting</p>
 <p><img src="https://lh3.googleusercontent.com/-i5Buppn2lJeLGwu5hnt5Habhln4ZCkG9kxDnLahYWRWA9RfJOTlykQctpsIP8vnmbjNBxpN8x0t" alt="enter image description here"></p>
-<h5 id="cornell-box-with-two-light-sources">Cornell Box with two light sources</h5>
+<h4 id="cornell-box-with-two-light-sources">Cornell Box with two light sources</h4>
 <p>Initial step: direct lighting</p>
 <p><img src="https://lh3.googleusercontent.com/EDHEsowIbAXFqlEJzMPw-NDrZUvb46v1IEkEm5GGs90xhBJf3R1D-4Kzp0X8AFEe2Z9z_-hjfle0" alt="enter image description here"></p>
 <p>500,000 photons with 5 traces</p>
-<h4 id="hitpoint-radius-shrinking">2). Hitpoint Radius Shrinking</h4>
-<h4 id="photon-view">3). Photon View</h4>
-<h4 id="realistic-camera">4). Realistic Camera</h4>
+<p><img src="https://lh3.googleusercontent.com/pK11DKTyWR0JkmKJKLfM9-r9oS32DVe9ke1-fw2z3UjuVZpzjqizT8UqvEEegbbPIN8awavWV1O4" alt="enter image description here"></p>
+<h3 id="hitpoint-radius-shrinking">2). Hitpoint Radius Shrinking</h3>
+<h3 id="photon-view">3). Photon View</h3>
+<h3 id="realistic-camera">4). Realistic Camera</h3>
 <h2 id="revision-based-on-last-version">2. Revision Based on Last Version</h2>
 <p><a href="https://github.com/VElysianP/ProgressivePhotonMappingCIS599">last version</a></p>
 <h3 id="no-kd-tree-for-acceleration">1) No Kd-tree for Acceleration</h3>
