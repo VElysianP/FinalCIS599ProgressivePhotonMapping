@@ -3,21 +3,30 @@
 
 ## 1. Rendering Results
 
-#### 1. General View 
+#### 1). General View 
 
-Cornell Box 
+##### Cornell Box 
 
-Cornell Box with two light sources
+Initial step: direct lighting 
+
+
+
+##### Cornell Box with two light sources
+
+
+Initial step: direct lighting 
+
+
 
 500,000 photons with 5 traces
 
 
 
-#### 2. Hitpoint Radius Shrinking 
+#### 2). Hitpoint Radius Shrinking 
 
-#### 3. Photon View
+#### 3). Photon View
 
-#### 4. Realistic Camera
+#### 4). Realistic Camera
 
 ## 2. Revision Based on Last Version 
 
