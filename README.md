@@ -5,7 +5,19 @@
 
 #### 1. General View 
 
+Cornell Box 
+
+Cornell Box with two light sources
+
+500,000 photons with 5 traces
+
+
+
 #### 2. Hitpoint Radius Shrinking 
+
+#### 3. Photon View
+
+#### 4. Realistic Camera
 
 ## 2. Revision Based on Last Version 
 
@@ -37,5 +49,12 @@ Because when implementing ray tracing, only one ray will be shot from the camera
 
 To get the right effect of glass balls, all the rays are forced to go through the glass ball rather than being reflected. It can be called "Biased Progressive Photon Mapping". But this is also not correct because there will not be any reflection from the light source on those Fresnel material, there is a comparison between so-called "Biased Progressive Photon Mapping" and full-lighting path tracing integrator. 
 
+Full-lighting-integrator with 900 samples per pixel with 5 traces
+
+![enter image description here](https://lh3.googleusercontent.com/-FwWKK7vmZXo/WnIjc3XuIgI/AAAAAAAABhg/lAF85vzPPtYIEW2asR7hflu2VpQgR_jeQCLcBGAs/s0/rendered_images_11.png "rendered_images_11.png")
+
+"Biased" Progressive Photon Mapping with 500,000 photons with 5 traces
+
+![enter image description here](https://lh3.googleusercontent.com/-Ald0-Dtt4MA/WnIVUhqhDJI/AAAAAAAABhA/u60ZR7vLQe8oankxduTSINpGk4RaZVR7wCLcBGAs/s0/rendered_images62.png "rendered_images62.png")
 
 Therefore, a unbiased sampling method is essential for choosing bxdfs for those materials with several bxdfs. 
