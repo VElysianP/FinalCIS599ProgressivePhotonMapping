@@ -10,7 +10,7 @@
 <p>Initial step: direct lighting</p>
 <p><img src="https://lh3.googleusercontent.com/-i5Buppn2lJeLGwu5hnt5Habhln4ZCkG9kxDnLahYWRWA9RfJOTlykQctpsIP8vnmbjNBxpN8x0t" alt="enter image description here"></p>
 <p>500,000 photons with 5 traces</p>
-<p><img src="https://lh3.googleusercontent.com/9wXXQGkMZfNEIkEWLr_WIHTncSO2-ru67-DykkqeQsliMHcN529-Ye-xE8huRy0Ez9rv9av1BQc9" alt="enter image description here"></p>
+<p><img src="https://lh3.googleusercontent.com/Chtr-ZJEZ6FgTRE30hUn5M3qp6qlXgik41TaZUBIPjOeC00KCaQcAyB77Td6psMvpN7a-UA42wjX" alt="enter image description here"></p>
 <h4 id="cornell-box-with-two-light-sources">Cornell Box with two light sources</h4>
 <p>Initial step: direct lighting</p>
 <p><img src="https://lh3.googleusercontent.com/EDHEsowIbAXFqlEJzMPw-NDrZUvb46v1IEkEm5GGs90xhBJf3R1D-4Kzp0X8AFEe2Z9z_-hjfle0" alt="enter image description here"></p>
