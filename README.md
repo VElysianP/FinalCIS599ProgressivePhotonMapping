@@ -19,6 +19,12 @@
 <p>2000000 photons with 10 traces</p>
 <p><img src="https://lh3.googleusercontent.com/YtSYC1PChk_K1v87gM5AQqUNJ1aIbBkwKjTTH6ggRAvqr-OzINu1ujTGbfz9Kht3_ymU45t-yai1" alt="enter image description here"></p>
 <h3 id="hitpoint-radius-shrinking">2). Hitpoint Radius Shrinking</h3>
+<p>Comparison: Fulling Lighting 900 samples per pixel</p>
+<p><img src="https://lh3.googleusercontent.com/-vPlfGKOR5tG-D2HljEcfA7BVNM93hX6OghjYNfmz-0ZBk94rGIpOwwIHg6l9uwF0K7ChWvHprTm" alt="enter image description here"></p>
+<p>Direct Lighting</p>
+<p><img src="https://lh3.googleusercontent.com/tWNv9LIyHZ2DKgmg5g5dFRcd8ouVjRpawuPdShkTv-0FloPdA-VI9TCtayj9pQvHJKs1frmP9Rbq" alt="enter image description here"></p>
+<p>500,000 photons with 5 traces</p>
+<p><img src="https://lh3.googleusercontent.com/0rBO2NsrbkCAnBRgrleRBsV1iEmIaysB32A712QOHd-6AdND4LNKhJyHER2KRiE_K_t05yXH_N7_" alt="enter image description here"></p>
 <h3 id="photon-view">3). Photon View</h3>
 <h3 id="realistic-camera">4). Realistic Camera</h3>
 <h2 id="revision-based-on-last-version">2. Revision Based on Last Version</h2>
@@ -33,6 +39,7 @@
 <h3 id="anti-aliasing">3) Anti-Aliasing</h3>
 <p>To have smoother edges, anti-aliasing is implemented.</p>
 <h2 id="limitations-and-future-implementation">3. Limitations and Future Implementation</h2>
+<h3 id="limitation">1) Limitation</h3>
 <p>The major limitation of this project is rendering right result of transmissive materials like glass ball or some clear plastic materials. The main reason lies in the first path of ray tracing.</p>
 <p>Because when implementing ray tracing, only one ray will be shot from the camera. Therefore, when the intersected material has more than one bxdf (especially Fresnel material), the materials have to be randomly chosen. However, the sampler in the code cannot produce huge amount of random samples especially in a single function. Therefore, when implementing ray tracing, almost all the samplers will choose specular brdf rather than btdf, and this results in the face that glass balls are turned into mirror ball, which is apparently wrong.</p>
 <p>To get the right effect of glass balls, all the rays are forced to go through the glass ball rather than being reflected. It can be called “Biased Progressive Photon Mapping”. But this is also not correct because there will not be any reflection from the light source on those Fresnel material, there is a comparison between so-called “Biased Progressive Photon Mapping” and full-lighting path tracing integrator.</p>
@@ -41,4 +48,11 @@
 <p>“Biased” Progressive Photon Mapping with 500,000 photons with 5 traces</p>
 <p><img src="https://lh3.googleusercontent.com/-Ald0-Dtt4MA/WnIVUhqhDJI/AAAAAAAABhA/u60ZR7vLQe8oankxduTSINpGk4RaZVR7wCLcBGAs/s0/rendered_images62.png" alt="enter image description here" title="rendered_images62.png"></p>
 <p>Therefore, a unbiased sampling method is essential for choosing bxdfs for those materials with several bxdfs.</p>
+<h3 id="comparison-between-path-tracing-and-progressive-photon-mapping">2) Comparison Between Path Tracing and Progressive Photon Mapping</h3>
+<h4 id="advantage">Advantage</h4>
+<p>Better global illumination effects</p>
+<h4 id="disadvantage">Disadvantage</h4>
+<p>Biased Bxdf selection</p>
+<p>Parameter selection has great influence on the result</p>
+<p>Extremely time consuming</p>
 
