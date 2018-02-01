@@ -9,11 +9,15 @@
 <h4 id="cornell-box">Cornell Box</h4>
 <p>Initial step: direct lighting</p>
 <p><img src="https://lh3.googleusercontent.com/-i5Buppn2lJeLGwu5hnt5Habhln4ZCkG9kxDnLahYWRWA9RfJOTlykQctpsIP8vnmbjNBxpN8x0t" alt="enter image description here"></p>
+<p>500,000 photons with 5 traces</p>
+<p><img src="https://lh3.googleusercontent.com/9wXXQGkMZfNEIkEWLr_WIHTncSO2-ru67-DykkqeQsliMHcN529-Ye-xE8huRy0Ez9rv9av1BQc9" alt="enter image description here"></p>
 <h4 id="cornell-box-with-two-light-sources">Cornell Box with two light sources</h4>
 <p>Initial step: direct lighting</p>
 <p><img src="https://lh3.googleusercontent.com/EDHEsowIbAXFqlEJzMPw-NDrZUvb46v1IEkEm5GGs90xhBJf3R1D-4Kzp0X8AFEe2Z9z_-hjfle0" alt="enter image description here"></p>
 <p>500,000 photons with 5 traces</p>
 <p><img src="https://lh3.googleusercontent.com/pK11DKTyWR0JkmKJKLfM9-r9oS32DVe9ke1-fw2z3UjuVZpzjqizT8UqvEEegbbPIN8awavWV1O4" alt="enter image description here"></p>
+<p>2000000 photons with 10 traces</p>
+<p><img src="https://lh3.googleusercontent.com/YtSYC1PChk_K1v87gM5AQqUNJ1aIbBkwKjTTH6ggRAvqr-OzINu1ujTGbfz9Kht3_ymU45t-yai1" alt="enter image description here"></p>
 <h3 id="hitpoint-radius-shrinking">2). Hitpoint Radius Shrinking</h3>
 <h3 id="photon-view">3). Photon View</h3>
 <h3 id="realistic-camera">4). Realistic Camera</h3>
