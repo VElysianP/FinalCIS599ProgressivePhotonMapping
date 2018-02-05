@@ -6,7 +6,8 @@
 <h1 id="finalcis599progressivephotonmapping">FinalCIS599ProgressivePhotonMapping</h1>
 <h2 id="algorithm">1. Algorithm</h2>
 <h3 id="data-structure">1) Data Structure</h3>
-<pre><code>Intersection isec;//intersection in the scene contains all of the information
+<pre><code>struct PixelHitPoint{
+Intersection isec;//intersection in the scene contains all of the information
 Ray ray; //the coming firection of ray
 Point2i pixel; //the corresponding pixel of the hitpoint
 Point3f position; //the hitpoint position in world coordinate in the scene
@@ -16,7 +17,8 @@ Color3f color;//the color to color the exact pixel finally
 Color3f newColor = Color3f(0.0f);//the tempColor storage for flux correction
 Color3f indirectColor = Color3f(0.0f);
 float radius = 0.5f;// the radius that we will check for the final color result
-float density = 1.0f; 
+float density = 1.0f; //for shrinking the radius for better results
+}
 </code></pre>
 <h3 id="integrator">2) Integrator</h3>
 <h2 id="rendering-results">2. Rendering Results</h2>
