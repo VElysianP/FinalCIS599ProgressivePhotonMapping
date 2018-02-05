@@ -4,6 +4,9 @@
 ---
 
 <h1 id="finalcis599progressivephotonmapping">FinalCIS599ProgressivePhotonMapping</h1>
+<h2 id="algorithm">1. Algorithm</h2>
+<h3 id="data-structure">1) Data Structure</h3>
+<h3 id="integrator">2) Integrator</h3>
 <h2 id="rendering-results">2. Rendering Results</h2>
 <h3 id="general-view">1). General View</h3>
 <h4 id="cornell-box">Cornell Box</h4>
@@ -11,6 +14,8 @@
 <p><img src="https://lh3.googleusercontent.com/-i5Buppn2lJeLGwu5hnt5Habhln4ZCkG9kxDnLahYWRWA9RfJOTlykQctpsIP8vnmbjNBxpN8x0t" alt="enter image description here"></p>
 <p>500,000 photons with 5 traces</p>
 <p><img src="https://lh3.googleusercontent.com/Chtr-ZJEZ6FgTRE30hUn5M3qp6qlXgik41TaZUBIPjOeC00KCaQcAyB77Td6psMvpN7a-UA42wjX" alt="enter image description here"></p>
+<p>2,000,000 photons with 20 traces</p>
+<p><img src="https://lh3.googleusercontent.com/Mo5zB90xkJOfeR4G0e88rqnng8YywuEWrrVkWNsAtdZRsj0wH6izm3H1lnB0P5whIB4YIK3R0Die" alt="enter image description here"></p>
 <h4 id="cornell-box-with-two-light-sources">Cornell Box with two light sources</h4>
 <p>Initial step: direct lighting</p>
 <p><img src="https://lh3.googleusercontent.com/EDHEsowIbAXFqlEJzMPw-NDrZUvb46v1IEkEm5GGs90xhBJf3R1D-4Kzp0X8AFEe2Z9z_-hjfle0" alt="enter image description here"></p>
