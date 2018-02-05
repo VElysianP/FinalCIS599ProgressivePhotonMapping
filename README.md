@@ -4,7 +4,7 @@
 ---
 
 <h1 id="finalcis599progressivephotonmapping">FinalCIS599ProgressivePhotonMapping</h1>
-<h2 id="rendering-results">1. Rendering Results</h2>
+<h2 id="rendering-results">2. Rendering Results</h2>
 <h3 id="general-view">1). General View</h3>
 <h4 id="cornell-box">Cornell Box</h4>
 <p>Initial step: direct lighting</p>
@@ -23,11 +23,19 @@
 <p><img src="https://lh3.googleusercontent.com/-vPlfGKOR5tG-D2HljEcfA7BVNM93hX6OghjYNfmz-0ZBk94rGIpOwwIHg6l9uwF0K7ChWvHprTm" alt="enter image description here"></p>
 <p>Direct Lighting</p>
 <p><img src="https://lh3.googleusercontent.com/tWNv9LIyHZ2DKgmg5g5dFRcd8ouVjRpawuPdShkTv-0FloPdA-VI9TCtayj9pQvHJKs1frmP9Rbq" alt="enter image description here"></p>
+<p>10,000 photons with 1 traces</p>
+<p><img src="https://lh3.googleusercontent.com/BKLDz-EgEthUMinza90beu5sn8V_Maix6T09qblbbIaRggjGexgaiA1JRp6vAg3eAmgjWX5RfPMT" alt="enter image description here"></p>
+<p>30,000 photons with 3 traces</p>
+<p><img src="https://lh3.googleusercontent.com/yDiA-jPZ_rYTCbHHoNEFL0mWZcs3O_TLRhz0T213td-HC5hPthJxAT-R00QyyoxgDKQu2KOO7kPt" alt="enter image description here"></p>
+<p>100,000 photons with 10 traces</p>
+<p><img src="https://lh3.googleusercontent.com/KBWcLjz8kh6nfZVIKOVgHcBvPtKMZ6GwM4NPFOvVzxiGgo3z5VwqVxREZJj2N-gi7Sd9w7Yg8F8z" alt="enter image description here"></p>
 <p>500,000 photons with 5 traces</p>
 <p><img src="https://lh3.googleusercontent.com/0rBO2NsrbkCAnBRgrleRBsV1iEmIaysB32A712QOHd-6AdND4LNKhJyHER2KRiE_K_t05yXH_N7_" alt="enter image description here"></p>
+<p>2,000,000 photons with 20 traces</p>
+<p><img src="https://lh3.googleusercontent.com/SaLVTXoSXnOUAsnHIqY3qr_GGNR0P5tbh5Ti41L460R5qSmuhfjCVxTvUz73Y4HqYO_Qn4wwO_GZ" alt="enter image description here"></p>
 <h3 id="photon-view">3). Photon View</h3>
 <h3 id="realistic-camera">4). Realistic Camera</h3>
-<h2 id="revision-based-on-last-version">2. Revision Based on Last Version</h2>
+<h2 id="revision-based-on-last-version">3. Revision Based on Last Version</h2>
 <p><a href="https://github.com/VElysianP/ProgressivePhotonMappingCIS599">last version</a></p>
 <h3 id="no-kd-tree-for-acceleration">1) No Kd-tree for Acceleration</h3>
 <p>When implementing photon mapping, the hitpoints are looking for thousands and millions of photons, and therefore acceleration structure is very important. However, for progressive photon mapping, photons are searching for hitPoints whereas the number of hitPoints are decided by the number of pixels. Therefore, it is possible that it is more expensive to construct a kd-tree and do searching than simply searching in a for-loop. Additionally, it is highly possible that the photon will influence more than one hitPoints, yet kd-tree can only find one “neighboring” hitPoint result.  Therefore, there is no acceleration structure inside this project, and hitPoints searching is only implemented though for-loop.</p>
@@ -38,7 +46,7 @@
 <p>There will be several cases that there are actually not hitPoints for some specific pixels. First, the ray from camera does not hit anything. Second, the ray goes into a specular material and never goes out. For these cases, there will not be any hitPoints for those pixels, and which means that this pixel will be black.</p>
 <h3 id="anti-aliasing">3) Anti-Aliasing</h3>
 <p>To have smoother edges, anti-aliasing is implemented.</p>
-<h2 id="limitations-and-future-implementation">3. Limitations and Future Implementation</h2>
+<h2 id="limitations-and-future-implementation">4. Limitations and Future Implementation</h2>
 <h3 id="limitation">1) Limitation</h3>
 <p>The major limitation of this project is rendering right result of transmissive materials like glass ball or some clear plastic materials. The main reason lies in the first path of ray tracing.</p>
 <p>Because when implementing ray tracing, only one ray will be shot from the camera. Therefore, when the intersected material has more than one bxdf (especially Fresnel material), the materials have to be randomly chosen. However, the sampler in the code cannot produce huge amount of random samples especially in a single function. Therefore, when implementing ray tracing, almost all the samplers will choose specular brdf rather than btdf, and this results in the face that glass balls are turned into mirror ball, which is apparently wrong.</p>
