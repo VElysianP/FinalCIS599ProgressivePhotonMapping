@@ -8,27 +8,27 @@
 <h3 id="data-structure">1) Data Structure</h3>
 <pre><code>struct PixelHitPoint{
 //intersection in the scene contains all of the information
-Intersection isec;
+    Intersection isec;
 //the coming firection of ray
-Ray ray; 
+    Ray ray; 
 //the corresponding pixel of the hitpoint
-Point2i pixel; 
+    Point2i pixel; 
 //the hitpoint position in world coordinate in the scene
-Point3f position; 
+    Point3f position; 
 //the number of photons
-int numPhotons = 0; 
+    int numPhotons = 0; 
 //the number of new Photons
-int numNewPhotons = 0; 
+    int numNewPhotons = 0; 
 //the color to color the exact pixel finally
-Color3f color;
+    Color3f color;
 //the tempColor storage for flux correction
-Color3f newColor = Color3f(0.0f);
+    Color3f newColor = Color3f(0.0f);
 //the accumulated indirect color for that pixel
-Color3f indirectColor = Color3f(0.0f);
+    Color3f indirectColor = Color3f(0.0f);
 // the radius that we will check for the final color result
-float radius = 0.5f;
+    float radius = 0.5f;
 //for shrinking the radius for better results
-float density = 1.0f; 
+    float density = 1.0f; 
 }
 </code></pre>
 <h3 id="integratorrender-and-progressiveintegrator">2) Integrator::Render() and ProgressiveIntegrator()</h3>
