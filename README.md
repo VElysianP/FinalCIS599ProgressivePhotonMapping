@@ -65,7 +65,8 @@ The first trace are calculated through direct lighting integrator rather then ph
 <p>E. Photon Accumulation<br>
 There is no photon data structure inside this project, photons are shot through several for-loops and the intersection point and color would be recorded in hitPoint structure. When calculating LTE, the final color do not have to divide the pdf calculated by BSDF::Sample_f because the indirect color will be averaged by the total amount of the photons or new photons according to the paper, and therefore, the photons are actually not sampled, no dividing by pdf is needed.</p>
 <p>Additionally, no photon can be accumulated on specular material, only reflection or refraction color can be displayed on those surfaces.</p>
-<p>F. HitPoints Radius Shrinking</p>
+<p>F. HitPoints Radius Shrinking<br>
+The radius of the hitPoints should change based on the calculate method provided by the paper. An accumulation ratio 0 &lt; alpha &lt; 1 should be decided to determine how many new photons does a hitPoint would accept after each photon trace.</p>
 <h2 id="rendering-results">2. Rendering Results</h2>
 <h3 id="general-view">1). General View</h3>
 <h4 id="cornell-box">Cornell Box</h4>
