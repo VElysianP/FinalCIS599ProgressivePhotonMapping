@@ -12,7 +12,7 @@ void ProgressivePhotonMapping::TraceProgressivePhotons(const Scene& scene, Progr
 {
     //this value functions as shrinking the radius
     //somehow needs to change based on our need
-    float alpha = 0.8;
+    float alpha = 0.9;
 
     for(int count = 0;count<numPhotons;count++)
     {
@@ -23,7 +23,7 @@ void ProgressivePhotonMapping::TraceProgressivePhotons(const Scene& scene, Progr
         Intersection isec = Intersection();
         BxDFType typeBxdf;
         //all indirect lighting color starts from the light source
-        Color3f currentColor = scene.lights[chosenLightNum]->emittedLight;
+        Color3f currentColor = scene.lights[chosenLightNum]->emittedLight * Color3f(scene.lights.size());
         int traceNum = 0;
 
         Vector3f woW;
@@ -52,22 +52,17 @@ void ProgressivePhotonMapping::TraceProgressivePhotons(const Scene& scene, Progr
                 //not the light source
                 else
                 {
-                    Color3f fColor = isec.bsdf->Sample_f(woW,&wiW,sampler->Get2D(),&currentPdf,BSDF_ALL,&typeBxdf);
-                    currentColor = currentColor * fColor * AbsDot(wiW,isec.bsdf->normal);
-                    tempRay = isec.SpawnRay(wiW);
 
+                    Color3f fColor = isec.bsdf->Sample_f(woW,&wiW,sampler->Get2D(),&currentPdf,BSDF_ALL,&typeBxdf);
+                    currentColor *= (fColor * AbsDot(wiW,isec.bsdf->normal));
+                    tempRay = isec.SpawnRay(wiW);
                     //the first trace of progressive photon mapping is replaced by
                     //direct lighting integrator
                     if((traceNum == 1)||((typeBxdf & BSDF_SPECULAR)!=0))
                     {
                        continue;
                     }
-
-                    if((typeBxdf & BSDF_SPECULAR) == 0)
-                    {
-                        UpdateHitPoints(hitPoints,isec.point,currentColor);
-                    }
-
+                    UpdateHitPoints(hitPoints,isec.point,currentColor);
                 }
 
                 //Russian Roulette

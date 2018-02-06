@@ -16,10 +16,10 @@ void Integrator::run()
 //    for(Point2i pixel : tilePixels)
 //    {
 //        //Uncomment this to debug a particular pixel within this tile
-//        if(pixel.x != 198 || pixel.y != 387)
-//        {
-//            continue;
-//        }
+////        if(pixel.x != 208 || pixel.y != 247)
+////        {
+////            continue;
+////        }
 //        Color3f pixelColor(0.f);
 //        // Ask our sampler for a collection of stratified samples, then raycast through each sample
 //        std::vector<Point2f> pixelSamples = sampler->GenerateStratifiedSamples();
@@ -87,10 +87,10 @@ void Integrator::ClampBounds()
 
 void Integrator::ProgressiveRayTracing(Ray cameraRay, const Scene& scene, const Point2i pixel, std::shared_ptr<Sampler> sampler, const int depth, QList<PixelHitPoint> &progHitPoint)
 {
-    if((pixel.x==117)&&(pixel.y==192))
-    {
-        Point3f tempPoint;
-    }
+//    if((pixel.x==208)&&(pixel.y==247))
+//    {
+//        Point3f tempPoint;
+//    }
     Intersection isec = Intersection();
     //cameraRay = scene.camera.Raycast((float)pixel.x,(float)pixel.y);
     Ray currentRay = cameraRay;
@@ -152,20 +152,20 @@ void Integrator::ProgressiveRayTracing(Ray cameraRay, const Scene& scene, const 
                         if(Refract(wo,Faceforward(Normal3f(0.0,0.0,1.0),wo),eta,&wi))
                         {
                             dep++;
-                            finalColor = finalColor * fColor;
+                            finalColor = leColor + finalColor * fColor * AbsDot(wiW,isec.bsdf->normal) / specularPdf;
                             currentRay = isec.SpawnRay(isec.bsdf->tangentToWorld * wi);
                         }
                         else
                         {
                             dep++;
-                            finalColor = finalColor * fColor;
+                            finalColor = leColor + finalColor * fColor * AbsDot(wiW,isec.bsdf->normal) / specularPdf;
                             currentRay = isec.SpawnRay(wiW);
                         }
                     }
                     else
                     {
                         dep++;
-                        finalColor = finalColor * fColor;
+                        finalColor = leColor + finalColor * fColor * AbsDot(wiW,isec.bsdf->normal) / specularPdf;
                         currentRay = isec.SpawnRay(wiW);
                     }
 
@@ -218,14 +218,7 @@ void Integrator::ProgressiveRayTracing(Ray cameraRay, const Scene& scene, const 
                     PixelHitPoint tempHitPoint;
                     tempHitPoint.pixel = pixel;
                     tempHitPoint.ray = currentRay;
-//                    if(dep == 0)
-//                    {
-                        tempHitPoint.color = finalColor * sumColor;
-//                    }
-//                    else
-//                    {
-                        //tempHitPoint.color = finalColor * leColor;
-                    //}
+                    tempHitPoint.color = finalColor * sumColor;
                     tempHitPoint.isec = isec;
                     tempHitPoint.position = isec.point;
                     progHitPoint.push_back(tempHitPoint);
