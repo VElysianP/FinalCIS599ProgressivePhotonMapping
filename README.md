@@ -85,18 +85,23 @@ The radius of the hitPoints should change based on the calculate method provided
 <p><img src="https://lh3.googleusercontent.com/YtSYC1PChk_K1v87gM5AQqUNJ1aIbBkwKjTTH6ggRAvqr-OzINu1ujTGbfz9Kht3_ymU45t-yai1" alt="enter image description here"></p>
 <h3 id="hitpoint-radius-shrinking">2). Hitpoint Radius Shrinking</h3>
 <p>Comparison: Fulling Lighting 900 samples per pixel</p>
+<p>The image has smooth edges but it is noisy even with 900 samples per pixel.</p>
 <p><img src="https://lh3.googleusercontent.com/-vPlfGKOR5tG-D2HljEcfA7BVNM93hX6OghjYNfmz-0ZBk94rGIpOwwIHg6l9uwF0K7ChWvHprTm" alt="enter image description here"></p>
 <p>Initial state: Direct Lighting</p>
+<p>After the first trace of direct lighting, the direct light color is displayed in the image, and not indirect lighting can be seen. However, because the first trace of progressive photon mapping is based on ray tracing, the edge is not smooth with apparent “zig-zags”.</p>
 <p><img src="https://lh3.googleusercontent.com/tWNv9LIyHZ2DKgmg5g5dFRcd8ouVjRpawuPdShkTv-0FloPdA-VI9TCtayj9pQvHJKs1frmP9Rbq" alt="enter image description here"></p>
 <p>10,000 photons with 1 traces</p>
+<p>After 10,000 photons shot in the scene, the indirect lighting color can be seen in the image, however it is still noisy.</p>
 <p><img src="https://lh3.googleusercontent.com/BKLDz-EgEthUMinza90beu5sn8V_Maix6T09qblbbIaRggjGexgaiA1JRp6vAg3eAmgjWX5RfPMT" alt="enter image description here"></p>
 <p>30,000 photons with 3 traces</p>
 <p><img src="https://lh3.googleusercontent.com/yDiA-jPZ_rYTCbHHoNEFL0mWZcs3O_TLRhz0T213td-HC5hPthJxAT-R00QyyoxgDKQu2KOO7kPt" alt="enter image description here"></p>
 <p>100,000 photons with 10 traces</p>
-<p><img src="https://lh3.googleusercontent.com/KBWcLjz8kh6nfZVIKOVgHcBvPtKMZ6GwM4NPFOvVzxiGgo3z5VwqVxREZJj2N-gi7Sd9w7Yg8F8z" alt="enter image description here"></p>
+<p>When more photons are shot into the scene, the image become smoother and smoother.<br>
+<img src="https://lh3.googleusercontent.com/KBWcLjz8kh6nfZVIKOVgHcBvPtKMZ6GwM4NPFOvVzxiGgo3z5VwqVxREZJj2N-gi7Sd9w7Yg8F8z" alt="enter image description here"></p>
 <p>500,000 photons with 5 traces</p>
 <p><img src="https://lh3.googleusercontent.com/0rBO2NsrbkCAnBRgrleRBsV1iEmIaysB32A712QOHd-6AdND4LNKhJyHER2KRiE_K_t05yXH_N7_" alt="enter image description here"></p>
 <p>2,000,000 photons with 20 traces</p>
+<p>When large amount of photons are shot, the pixel colors become gradual with less noisy.</p>
 <p><img src="https://lh3.googleusercontent.com/SaLVTXoSXnOUAsnHIqY3qr_GGNR0P5tbh5Ti41L460R5qSmuhfjCVxTvUz73Y4HqYO_Qn4wwO_GZ" alt="enter image description here"></p>
 <h3 id="photon-view">3). Photon View</h3>
 <h3 id="realistic-camera">4). Realistic Camera</h3>
