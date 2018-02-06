@@ -49,6 +49,23 @@
 }
 </code></pre>
 <h3 id="integratorrender-and-progressiveintegrator">2) Integrator::Render() and ProgressiveIntegrator()</h3>
+<h4 id="general-algorithm-workflow">General Algorithm Workflow</h4>
+<p><img src="https://lh3.googleusercontent.com/fo9gyXNbCQJP9XGfaaUxcPAHikoDXyneVIMJRwY2K-u7ins8b2Mkc7tvODT5GwHt74G-eNDPpRuJ" alt="enter image description here"></p>
+<h4 id="implementation-details">Implementation Details</h4>
+<p>A. Transmissive Material<br>
+For transmissive material especially Fresnel material with more than one BxDFs, because BSDF will not always choose BTDF that go inside the geometry, all the rays are forced to penetrate this transmissive material.</p>
+<p>Also, if the ray cannot go out from the transmissive material after specific number of traces defined, this hitPoint will have no intersection point with the scene, and therefore the intersection point inside the scene would be Point3f(-INFINITY), and t in Intersection class would be -1.</p>
+<p>B. Pure Specular Material<br>
+For pure specular material, if the ray hit pure specular material, the ray would be bounced based on the material property, and the while loop will end if the ray hits non-specular material, light source or it cannot hit anything as well as it cannot go out from the geometry as stated in the last part.</p>
+<p>However, if the ray goes through the specular material and finally hits a matte surface, the color of the specular should be recorded in direct lighting color to correctly display the color of the specular material.</p>
+<p>C. Light Source<br>
+If the hitPoint is on the light, the direct color of the hitPoint would be the color of the light source, and no photon will accumulate in this hitPoint, which means that indirect lighting color would be 0.</p>
+<p>D. Direct Lighting Integrator<br>
+The first trace are calculated through direct lighting integrator rather then photon accumulation as suggested by Physically Based Rendering Technique to boost the computation efficiency. However it will cause problems like BxDF selection and sharp edges.</p>
+<p>E. Photon Accumulation<br>
+There is no photon data structure inside this project, photons are shot through several for-loops and the intersection point and color would be recorded in hitPoint structure. When calculating LTE, the final color do not have to divide the pdf calculated by BSDF::Sample_f because the indirect color will be averaged by the total amount of the photons or new photons according to the paper, and therefore, the photons are actually not sampled, no dividing by pdf is needed.</p>
+<p>Additionally, no photon can be accumulated on specular material, only reflection or refraction color can be displayed on those surfaces.</p>
+<p>F. HitPoints Radius Shrinking</p>
 <h2 id="rendering-results">2. Rendering Results</h2>
 <h3 id="general-view">1). General View</h3>
 <h4 id="cornell-box">Cornell Box</h4>
@@ -68,7 +85,7 @@
 <h3 id="hitpoint-radius-shrinking">2). Hitpoint Radius Shrinking</h3>
 <p>Comparison: Fulling Lighting 900 samples per pixel</p>
 <p><img src="https://lh3.googleusercontent.com/-vPlfGKOR5tG-D2HljEcfA7BVNM93hX6OghjYNfmz-0ZBk94rGIpOwwIHg6l9uwF0K7ChWvHprTm" alt="enter image description here"></p>
-<p>Direct Lighting</p>
+<p>Initial state: Direct Lighting</p>
 <p><img src="https://lh3.googleusercontent.com/tWNv9LIyHZ2DKgmg5g5dFRcd8ouVjRpawuPdShkTv-0FloPdA-VI9TCtayj9pQvHJKs1frmP9Rbq" alt="enter image description here"></p>
 <p>10,000 photons with 1 traces</p>
 <p><img src="https://lh3.googleusercontent.com/BKLDz-EgEthUMinza90beu5sn8V_Maix6T09qblbbIaRggjGexgaiA1JRp6vAg3eAmgjWX5RfPMT" alt="enter image description here"></p>
@@ -106,8 +123,10 @@
 <h3 id="comparison-between-path-tracing-and-progressive-photon-mapping">2) Comparison Between Path Tracing and Progressive Photon Mapping</h3>
 <h4 id="advantage">Advantage</h4>
 <p>Better global illumination effects</p>
+<p>Smooth rendered image (But with sharp edges)</p>
+<p>Less noise</p>
 <h4 id="disadvantage">Disadvantage</h4>
 <p>Biased Bxdf selection</p>
 <p>Parameter selection has great influence on the result</p>
-<p>Extremely time consuming</p>
+<p>Time consuming</p>
 
