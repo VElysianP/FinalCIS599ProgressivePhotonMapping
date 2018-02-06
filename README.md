@@ -6,6 +6,21 @@
 <h1 id="finalcis599progressivephotonmapping">FinalCIS599ProgressivePhotonMapping</h1>
 <h2 id="algorithm">1. Algorithm</h2>
 <h3 id="data-structure">1) Data Structure</h3>
+<p>Based on the data structure in the paper <em>Progressive Photon Mapping</em> , some revisions are made to store some temporary data for hitPoint radius shrink and also separation of direct color and indirect color.</p>
+<p>The original data structure in the paper <em>Progressive Photon Mapping</em> is:</p>
+<pre><code>struct hitpoint {
+    position x    //Hit location
+    normal n    //Normal at x
+    vector v      //Ray direction
+    integer BRDF     //BRDF index
+    float x,y      //Pixel location
+    color wgt     //Pixel weight
+    float R     //Current photon radius
+    integer N     //Accumulated photon count
+    color c     //Accumulated reflected flux
+}
+</code></pre>
+<p>However, according to <em>Physically Based Rendering Technique</em>, it would be better to separate direct lighting and indirect lighting. Therefore, there are two Color3f components in this data structure. Also, the paper mentioned radius shrinking and photon elimination for each hitPoints. Therefore, extra data structure are essential to store the original photon amount and color and also new photon amount as well as color in this data structure. And the following data structure represent the data structure in this project:</p>
 <pre><code>struct PixelHitPoint{
 //intersection in the scene contains all of the information
     Intersection isec;
@@ -14,12 +29,13 @@
 //the corresponding pixel of the hitpoint
     Point2i pixel; 
 //the hitpoint position in world coordinate in the scene
+//if there is no hitpoint in the scene, the position would be Point3f(-INFINITY)
     Point3f position; 
 //the number of photons
     int numPhotons = 0; 
 //the number of new Photons
     int numNewPhotons = 0; 
-//the color to color the exact pixel finally
+//the direct lighting color 
     Color3f color;
 //the tempColor storage for flux correction
     Color3f newColor = Color3f(0.0f);
@@ -28,6 +44,7 @@
 // the radius that we will check for the final color result
     float radius = 0.5f;
 //for shrinking the radius for better results
+//the initial value would be rewritten after the first trace of photons
     float density = 1.0f; 
 }
 </code></pre>
