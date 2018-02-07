@@ -109,7 +109,8 @@ void ProgressivePhotonMapping::UpdateHitPoints(QList<PixelHitPoint>& hitPoints,P
         //we should write the color into the hitPoint
         if(glm::length(hitPointPos - position) <= hitPoints[i].radius)
         {
-            hitPoints[i].newColor += currentColor;
+            //hitPoints[i].newColor += currentColor;
+            hitPoints[i].newColor += Color3f(1.0f); //for photon view
             hitPoints[i].numNewPhotons ++;
         }
     }
