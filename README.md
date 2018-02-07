@@ -104,7 +104,19 @@ The radius of the hitPoints should change based on the calculate method provided
 <p>When large amount of photons are shot, the pixel colors become gradual with less noisy.</p>
 <p><img src="https://lh3.googleusercontent.com/SaLVTXoSXnOUAsnHIqY3qr_GGNR0P5tbh5Ti41L460R5qSmuhfjCVxTvUz73Y4HqYO_Qn4wwO_GZ" alt="enter image description here"></p>
 <h3 id="photon-view">3). Photon View</h3>
-<h3 id="realistic-camera">4). Realistic Camera</h3>
+<p>The hitPoints that has photon inside its searching area will be colored white.</p>
+<p>Cornell Box with 50 photons 1 trace</p>
+<p><img src="https://lh3.googleusercontent.com/znq9HV35VunD9C4b8bXljX65MjtbhQiHHo_b7HafL72mVZRLsTKEAj1mGucyG3s2dCBKZ5h8-wtT" alt="enter image description here"></p>
+<p>Cornell Box with 100 photons 1 trace</p>
+<p><img src="https://lh3.googleusercontent.com/bGZ2sUJWlplbRyK5ow0RL9MpmJ06UhmPpOnScbwkwOQBKXo6Yfrm1Aip0u8Nqp9ZWjONuw3N0ycp" alt="enter image description here"></p>
+<p>Cornell Box 200 photons with 2 traces</p>
+<p>It is apparent that photons are bounced to create global illumination effect.</p>
+<p><img src="https://lh3.googleusercontent.com/kuBzp1K1honB5qBzZi3_Rc2p2VjaFqXTRdYb3bBi7cJneXeZpGBr3X1-tvjPDQZM7FQ_fk15PXmb" alt="enter image description here"></p>
+<p>Cornell Box with 1,000 photons 1 trace</p>
+<p><img src="https://lh3.googleusercontent.com/v6kS7myonOs4YKnraChaMcrAo2BIXyMRgpYxzI_X9OADlS_pcAUe7EYWrNW4bZFS_X7kU7-oQBuO" alt="enter image description here"></p>
+<p>Cornell Box 2,000 photons with 2 traces</p>
+<p><img src="https://lh3.googleusercontent.com/L2aTnFABpoI0mX7VIdbvLi5xA4zSgUjBy7QY_O06uwsofQk7LfKdEkYxZAWD98MEqZF1oBhQMZqb" alt="enter image description here"></p>
+<p>Therefore, large number of photons are needed to cover the scene and light the scene with the correct global illumination color.</p>
 <h2 id="revision-based-on-last-version">3. Revision Based on Last Version</h2>
 <p><a href="https://github.com/VElysianP/ProgressivePhotonMappingCIS599">last version</a></p>
 <h3 id="no-kd-tree-for-acceleration">1) No Kd-tree for Acceleration</h3>
